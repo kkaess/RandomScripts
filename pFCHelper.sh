@@ -8,4 +8,4 @@
 
 # both parameters should be terminated with a / if used.
 
-python3 $2printFitsComments.py $(ls $1*/Picture_1/Frame_1.fits $1SingleScans/*.fits)
+python3 $2printFitsComments.py $(ls $1*/Picture_*/Frame_*.fits $1SingleScans/*.fits)
