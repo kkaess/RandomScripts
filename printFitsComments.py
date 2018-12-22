@@ -39,12 +39,6 @@ def printFitsComment(fileList,orderByTimestamp=False):
 if __name__ == "__main__":
 
 	printFitsComment(sys.argv[1:],orderByTimestamp=True)
-#	for fn in sys.argv[1:]:
-# 		with fits.open(fn) as f:
-# 			print(fn)
-# 			if 'COMMENT' in f[0].header.keys():
-# 				print(f[0].header['COMMENT'])
-# 			print()
 
  
 
