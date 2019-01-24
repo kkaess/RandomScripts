@@ -13,18 +13,21 @@ from datetime import datetime
 def printFitsComment(fileList,orderByTimestamp=False):
 	stringListList = [] #container to store the information
 	for filename in fileList:
-		with fits.open(filename,ignore_missing_end=True) as f:
-			stringList = [filename] #enter filename as first element in entry
-			if 'COMMENT' in f[0].header.keys():
-				stringList.append(f[0].header['COMMENT']) #enter COMMENT as second element in entry
-			else:
-				stringList.append('')
-			if 'DATE' in f[0].header.keys():
+		try:
+			with fits.open(filename,ignore_missing_end=True) as f:
+				stringList = [filename] #enter filename as first element in entry
+				if 'COMMENT' in f[0].header.keys():
+					stringList.append(f[0].header['COMMENT']) #enter COMMENT as second element in entry
+				else:
+					stringList.append('')
+				if 'DATE' in f[0].header.keys():
 				# parse header DATE field and enter as third element in entry
-				stringList.append(datetime.strptime(f[0].header['DATE'],"%Y-%m-%dT%H:%M:%S"))
-			else:
-				stringList.append(datetime.today()+datetime.day)
-		stringListList.append(stringList)
+					stringList.append(datetime.strptime(f[0].header['DATE'],"%Y-%m-%dT%H:%M:%S"))
+				else:
+					stringList.append(datetime.today()+datetime.day)
+				stringListList.append(stringList)
+		except OSError:
+			print('Failed to open '+filename, file=sys.stderr)
 	if orderByTimestamp:
 		stringListList.sort(key = lambda x: x[2]) #sorts by the date
 			
